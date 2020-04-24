@@ -94,6 +94,8 @@ for dep_repo in "${dep_repos[@]}"; do
 }}"
 
     # Make the request to trigger the build and get the ID of the request
+    travis_api /repo/$dep_repo/requests -H 'Accept: application/json' -X POST -d "$body"
+    exit 1
     dep_repo_master_build_request_id=`travis_api /repo/$dep_repo/requests -H 'Accept: application/json' -X POST -d "$body" | python3 -c "import sys, json; print(json.load(sys.stdin)['request']['id'])"`
     echo "Build request ID: $dep_repo_master_build_request_id"
 
